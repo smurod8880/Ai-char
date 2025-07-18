@@ -14,14 +14,13 @@ RUN wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
     cd .. && \
     rm -rf ta-lib ta-lib-0.4.0-src.tar.gz
 
-# Симлинк, чтобы Python TA-Lib находил библиотеку
+# Симлинки, чтобы Python TA-Lib находил библиотеку
 RUN ln -s /usr/local/lib/libta_lib.so /usr/lib/libta_lib.so
 RUN ln -s /usr/local/include/ta-lib /usr/include/ta-lib
 
 WORKDIR /app
 COPY . /app
 
-# Установка Python-зависимостей
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
