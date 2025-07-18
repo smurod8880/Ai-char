@@ -11,6 +11,9 @@ RUN apt-get update && \
     cd .. && \
     rm -rf ta-lib-0.4.0-src.tar.gz ta-lib
 
+# Добавь пакет для dev headers
+RUN apt-get install -y libffi-dev
+
 WORKDIR /app
 COPY . /app
 
