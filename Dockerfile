@@ -1,7 +1,8 @@
 FROM python:3.11-slim
 
+# Установка системных зависимостей и TA-Lib (C-библиотека)
 RUN apt-get update && \
-    apt-get install -y build-essential wget && \
+    apt-get install -y build-essential wget gcc && \
     wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
     tar -xzf ta-lib-0.4.0-src.tar.gz && \
     cd ta-lib && \
@@ -11,13 +12,13 @@ RUN apt-get update && \
     cd .. && \
     rm -rf ta-lib-0.4.0-src.tar.gz ta-lib
 
-# Добавь пакет для dev headers
-RUN apt-get install -y libffi-dev
-
+# Переносим проект
 WORKDIR /app
 COPY . /app
 
+# Устанавливаем Python-зависимости
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# Запуск приложения (uvicorn для FastAPI)
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
